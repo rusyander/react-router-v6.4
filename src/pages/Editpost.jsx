@@ -36,6 +36,11 @@ const updatePost = async (post) => {
 
 const updatePostAction = async ({ request }) => {
   const formData = await request.formData();
+
+  if (!formData.get("title") || !formData.get("body")) {
+    return { message: "Title and body are required" };
+  }
+
   const updatedPost = await updatePost(formData);
   return { message: `Post ${updatedPost.id} updated`, redirect: "/posts" };
 };
